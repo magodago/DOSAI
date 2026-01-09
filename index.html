@@ -10,27 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,900;1,100;1,300;1,900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --cyan-glow: rgba(6, 182, 212, 0.5);
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            background-color: #020617;
-            color: white;
-            overflow-x: hidden;
-        }
+        :root { --cyan-glow: rgba(6, 182, 212, 0.5); }
+        body { font-family: 'Roboto', sans-serif; margin: 0; background-color: #020617; color: white; overflow-x: hidden; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(to bottom, #06b6d4, #0891b2);
-            border-radius: 10px;
-        }
-        .font-roboto-black-italic {
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: -0.05em;
-        }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #06b6d4, #0891b2); border-radius: 10px; }
+        .font-roboto-black-italic { font-weight: 900; font-style: italic; letter-spacing: -0.05em; }
         .bg-grid {
             background-image: 
                 linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
@@ -38,38 +23,26 @@
             background-size: 80px 80px;
             mask-image: radial-gradient(circle at center, black, transparent 90%);
         }
-        
         .shooting-star {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(255,255,255,0.1), 0 0 0 8px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,1);
+            position: absolute; width: 4px; height: 4px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,1);
             animation: animate 3s linear infinite;
         }
-        .shooting-star::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            height: 1px;
-            background: linear-gradient(90deg, #fff, transparent);
-        }
+        .shooting-star::before { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
         @keyframes animate {
             0% { transform: rotate(315deg) translateX(0); opacity: 1; }
             70% { opacity: 1; }
             100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
         }
-        
-        .shooting-star:nth-child(1) { top: 0; right: 0; left: initial; animation-delay: 0s; animation-duration: 1s; }
-        .shooting-star:nth-child(2) { top: 0; right: 80px; left: initial; animation-delay: 0.2s; animation-duration: 3s; }
-        .shooting-star:nth-child(3) { top: 80px; right: 0; left: initial; animation-delay: 0.4s; animation-duration: 2s; }
-        .shooting-star:nth-child(4) { top: 0; right: 180px; left: initial; animation-delay: 0.6s; animation-duration: 1.5s; }
-        .shooting-star:nth-child(5) { top: 0; right: 400px; left: initial; animation-delay: 0.8s; animation-duration: 2.5s; }
+        .shooting-star:nth-child(1) { top: 0; right: 0; animation-delay: 0s; animation-duration: 1s; }
+        .shooting-star:nth-child(2) { top: 0; right: 80px; animation-delay: 0.2s; animation-duration: 3s; }
+        /* Loader Styles */
+        #loader {
+            position: fixed; inset: 0; background: #020617; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .loader-ring { width: 80px; height: 80px; border: 2px solid rgba(6, 182, 212, 0.1); border-top-color: #06b6d4; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 <script type="importmap">
 {
@@ -86,8 +59,22 @@
 </script>
 </head>
 <body>
+    <div id="loader">
+        <div class="loader-ring mb-6"></div>
+        <div class="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-500 animate-pulse text-center px-4">
+            Iniciando Protocolos de IA Estratégica...
+        </div>
+    </div>
     <div id="root"></div>
-    <!-- CRITICAL FIX: Add the entry script tag -->
+    <script type="module">
+        // Quitar el loader cuando React tome el control
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                if (loader) loader.style.display = 'none';
+            }, 1000);
+        });
+    </script>
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>
