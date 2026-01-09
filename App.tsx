@@ -1,21 +1,20 @@
 
 import React, { useState } from 'react';
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { 
   Mic, MessageSquare, Settings, ArrowRight, TrendingDown, 
   BrainCircuit, Globe, Target, Quote, Star, CheckCircle, 
   Utensils, Scissors, ShoppingBag, Stethoscope, MessageCircle,
-  Zap, Users, Clock, Sparkles
+  Zap, Users, Clock, Sparkles, ShieldCheck
 } from 'lucide-react';
-import { SLIDES, TESTIMONIALS, WHATSAPP_URL, SECTORS, COMPARISON_DATA } from './constants';
-import IncomeLossChart from './components/IncomeLossChart';
+import { SLIDES, TESTIMONIALS, WHATSAPP_URL, SECTORS, COMPARISON_DATA } from './constants.tsx';
+import IncomeLossChart from './components/IncomeLossChart.tsx';
 
 const IconMap: any = {
   Utensils, Scissors, ShoppingBag, Stethoscope, Mic, Settings, Target
 };
 
 const App: React.FC = () => {
-  const [activeSlideId, setActiveSlideId] = useState(0);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
@@ -50,6 +49,9 @@ const App: React.FC = () => {
             <MessageCircle className="w-8 h-8 text-white fill-white" />
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full border-2 border-slate-950 flex items-center justify-center text-[10px] font-black text-white">1</div>
           </div>
+          <div className="absolute right-20 top-1/2 -translate-y-1/2 bg-white text-slate-950 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Respondo en &lt; 5 min
+          </div>
         </a>
       </motion.div>
 
@@ -58,7 +60,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 flex justify-center items-center gap-4">
           <span className="flex h-2 w-2 rounded-full bg-cyan-500 animate-ping" />
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400">
-            Disponibilidad limitada: Solo 2 plazas libres para proyectos este mes
+            Agenda Abierta: Solo 2 huecos para nuevos proyectos este mes
           </p>
         </div>
       </div>
@@ -68,7 +70,7 @@ const App: React.FC = () => {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-slate-900 border border-cyan-500/20 rounded-xl flex items-center justify-center font-roboto-black-italic text-2xl text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]">DO</div>
             <div className="flex flex-col">
-              <span className="text-xs font-black tracking-[0.4em] text-white">DAVID ORTIZ</span>
+              <span className="text-xs font-black tracking-[0.4em] text-white uppercase">David Ortiz</span>
               <span className="text-[9px] font-black uppercase tracking-widest text-cyan-500">IA de Alto Rendimiento</span>
             </div>
           </div>
@@ -79,34 +81,54 @@ const App: React.FC = () => {
         {/* HERO */}
         <section className="min-h-screen flex items-center justify-center p-6 text-center">
           <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} className="max-w-6xl">
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12">
-              <BrainCircuit className="w-4 h-4" /> Arquitectura de Negocios
+            <div className="inline-flex items-center gap-6 mb-12">
+              <div className="flex -space-x-2">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[8px] font-black text-cyan-500">
+                    {['B', 'R', 'P', 'S'][i]}
+                  </div>
+                ))}
+              </div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">+12 Negocios automatizados este mes</p>
             </div>
+            
             <h1 className="font-roboto-black-italic text-[14vw] md:text-[10rem] leading-[0.8] mb-12 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">
               VIVE <br/> <span className="text-cyan-500">EL FUTURO.</span>
             </h1>
             <p className="text-xl md:text-4xl font-light text-slate-400 max-w-4xl mx-auto italic leading-tight mb-16">
               "No implementamos tecnología. Diseñamos libertad financiera a través de la IA."
             </p>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <a href={WHATSAPP_URL} target="_blank" className="bg-cyan-500 text-slate-950 px-12 py-6 rounded-full font-roboto-black-italic uppercase text-xl md:text-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all">
-                Auditoría Gratuita 15 min
-              </a>
-            </motion.div>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <a href={WHATSAPP_URL} target="_blank" className="bg-cyan-500 text-slate-950 px-12 py-6 rounded-full font-roboto-black-italic uppercase text-xl md:text-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all">
+                  Auditoría Gratuita 15 min
+                </a>
+              </motion.div>
+              <div className="flex items-center gap-3 text-slate-500 text-[10px] font-black uppercase tracking-widest">
+                <ShieldCheck className="w-5 h-5 text-cyan-500" />
+                Sin compromiso de permanencia
+              </div>
+            </div>
           </motion.div>
         </section>
 
         {/* COST COMPARISON (THE "LESS THAN YOU THINK" SECTION) */}
-        <section className="min-h-screen flex items-center justify-center p-6 bg-slate-900/30">
+        <section className="min-h-[80vh] flex items-center justify-center p-6 bg-slate-900/30">
           <div className="max-w-5xl w-full">
             <div className="text-center mb-16">
               <h2 className="font-roboto-black-italic text-5xl md:text-8xl text-white mb-6 uppercase italic leading-none">
                 MUCHO <span className="text-cyan-500">MENOS</span> DE LO QUE <span className="text-cyan-500">PIENSAS.</span>
               </h2>
-              <p className="text-slate-400 text-xl font-light italic">La IA no es un gasto, es el empleado más rentable de tu historia.</p>
+              <p className="text-slate-400 text-xl font-light italic">La IA es el empleado más rentable que jamás tendrás.</p>
             </div>
             
-            <div className="bg-slate-900 border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl">
+            <div className="bg-slate-900 border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl relative">
+              <div className="absolute top-0 right-0 p-8">
+                <div className="bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest animate-pulse">
+                  Mejor Opción
+                </div>
+              </div>
               <div className="grid grid-cols-3 bg-white/5 p-8 border-b border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
                 <div>Concepto</div>
                 <div className="text-center">Empleado Humano</div>
@@ -122,9 +144,9 @@ const App: React.FC = () => {
                 </div>
               ))}
               <div className="p-10 bg-cyan-500/5 text-center">
-                <p className="text-slate-400 text-sm italic mb-6">"El retorno de inversión suele ocurrir en los primeros 45 días de implementación."</p>
+                <p className="text-slate-400 text-sm italic mb-6">"El ROI suele ser positivo desde el mes 1."</p>
                 <div className="inline-block px-8 py-3 bg-white/5 border border-cyan-500/30 rounded-2xl text-cyan-400 text-xs font-black uppercase tracking-widest">
-                  Ahorro estimado: > 15.000€/año
+                  Ahorro anual estimado: > 15.000€
                 </div>
               </div>
             </div>
@@ -136,7 +158,7 @@ const App: React.FC = () => {
           <div className="max-w-7xl w-full">
             <div className="text-center mb-20">
               <h2 className="font-roboto-black-italic text-5xl md:text-8xl text-white mb-6 uppercase italic">
-                Sectores <span className="text-cyan-500">Imbatibles</span>
+                Sectores <span className="text-cyan-500">Ganadores</span>
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -160,7 +182,7 @@ const App: React.FC = () => {
         <section className="min-h-screen flex items-center justify-center p-6 bg-slate-900/20">
           <div className="max-w-7xl w-full">
             <h2 className="font-roboto-black-italic text-5xl md:text-8xl text-center text-white mb-20 uppercase italic">
-              RESULTADOS <span className="text-cyan-500">MEDIBLES</span>
+              RESULTADOS <span className="text-cyan-500">RECIENTES</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {TESTIMONIALS.map((t, i) => (
@@ -207,7 +229,7 @@ const App: React.FC = () => {
               </a>
             </motion.div>
             <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
-              {['100% Personalizado', 'Sin Permanencia', 'Soporte 24/7', 'Escalado Real'].map((tag, i) => (
+              {['Resultados Reales', 'Implementación Rápida', 'Soporte Directo', 'Escalado IA'].map((tag, i) => (
                 <div key={i} className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-center gap-2">
                   <Zap className="w-3 h-3 text-cyan-500" /> {tag}
                 </div>
@@ -218,12 +240,14 @@ const App: React.FC = () => {
       </main>
 
       <footer className="p-10 flex justify-between items-center text-[8px] font-black uppercase tracking-[0.5em] text-slate-700">
-        <div>© DAVID ORTIZ CONSULTING</div>
+        <div>© DAVID ORTIZ CONSULTING 2025</div>
         <div className="flex gap-10">
           <span>PRIVACIDAD</span>
-          <span>ESTRATEGIA 2025</span>
+          <span>ESTRATEGIA DE ALTO NIVEL</span>
         </div>
       </footer>
+
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-cyan-500 origin-left z-[100]" style={{ scaleX }} />
     </div>
   );
 };

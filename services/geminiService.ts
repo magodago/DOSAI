@@ -2,7 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 
 export async function getSlideInsight(prompt: string): Promise<string | null> {
-  const apiKey = process.env.API_KEY;
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : null;
   if (!apiKey) return null;
 
   try {
