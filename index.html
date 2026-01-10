@@ -3,11 +3,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag para deshabilitar zoom en la medida de lo posible por el navegador -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title>Impulso Local | Tu Socio Tecnológico</title>
+    <title>Impulso Local | Tu Asistente Inteligente 24/7</title>
     
-    <!-- CORE STABLE STACK -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -19,7 +17,6 @@
     <style>
         :root { --accent: #06b6d4; }
         
-        /* Bloqueo estricto de zoom y centrado base */
         html, body {
             background-color: #020617; 
             color: white; 
@@ -28,8 +25,6 @@
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
             width: 100%;
-            height: 100%;
-            /* touch-action pan-x pan-y permite scroll pero bloquea el pinch-zoom en navegadores modernos */
             touch-action: pan-x pan-y;
             overscroll-behavior: none;
             -webkit-text-size-adjust: none;
@@ -53,26 +48,16 @@
             background-size: 40px 40px;
         }
 
-        /* Estrellas Fugaces Intensas */
         .shooting-star-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
         }
 
         .shooting-star {
-            position: absolute;
-            width: 450px; 
-            height: 3px;   
+            position: absolute; width: 450px; height: 3px;   
             background: linear-gradient(90deg, #fff, #06b6d4, transparent);
             filter: drop-shadow(0 0 20px #06b6d4) drop-shadow(0 0 10px #fff);
-            opacity: 0;
-            transform: rotate(-35deg);
+            opacity: 0; transform: rotate(-35deg);
         }
 
         @keyframes shoot-diagonal {
@@ -83,9 +68,9 @@
         }
 
         .star-1 { animation: shoot-diagonal 5s infinite ease-in; top: 5%; left: -10%; }
-        .star-2 { animation: shoot-diagonal 8s infinite ease-in; animation-delay: 2s; top: 40%; left: -20%; }
-        .star-3 { animation: shoot-diagonal 10s infinite ease-in; animation-delay: 5s; top: 0%; left: 30%; }
-        .star-4 { animation: shoot-diagonal 7s infinite ease-in; animation-delay: 1s; top: 60%; left: -15%; }
+        .star-2 { animation: shoot-diagonal 8s infinite ease-in; animation-delay: 2.5s; top: 40%; left: -20%; }
+        .star-3 { animation: shoot-diagonal 10s infinite ease-in; animation-delay: 5.5s; top: 0%; left: 30%; }
+        .star-4 { animation: shoot-diagonal 7s infinite ease-in; animation-delay: 1.5s; top: 60%; left: -15%; }
 
         #loader {
             position: fixed; inset: 0; background: #020617; z-index: 1000;
@@ -94,34 +79,23 @@
         }
         .pulse { width: 40px; height: 40px; border: 2px solid #06b6d4; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: rgba(255, 255, 255, 0.1);
+            height: 6px; border-radius: 10px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
+            background: #06b6d4; cursor: pointer; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
     </style>
-    
-    <script>
-        // Script agresivo para bloquear gestos de zoom en móviles y escritorio
-        document.addEventListener('touchstart', function (event) {
-            if (event.touches.length > 1) {
-                event.preventDefault();
-            }
-        }, { passive: false });
-
-        document.addEventListener('gesturestart', function (event) {
-            event.preventDefault();
-        });
-
-        document.addEventListener('wheel', function (event) {
-            if (event.ctrlKey) {
-                event.preventDefault();
-            }
-        }, { passive: false });
-    </script>
 </head>
 <body>
     <div id="loader">
         <div class="pulse"></div>
-        <div style="margin-top: 20px; color: #06b6d4; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;">Acompañando al comercio</div>
+        <div style="margin-top: 20px; color: #06b6d4; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;">Acompañando tu esfuerzo</div>
     </div>
 
-    <!-- Estrellas fugaces intensificadas -->
     <div class="shooting-star-container">
         <div class="shooting-star star-1"></div>
         <div class="shooting-star star-2"></div>
@@ -141,6 +115,60 @@
             return <i data-lucide={name} className={className}></i>;
         };
 
+        const Calculator = () => {
+            const [calls, setCalls] = useState(15);
+            const hoursPerMonth = Math.round((calls * 3 * 30) / 60);
+
+            return (
+                <div className="w-full max-w-2xl bg-cyan-500/5 border border-cyan-500/20 p-8 md:p-12 rounded-[3rem] reveal flex flex-col items-center">
+                    <h3 className="text-2xl font-bold mb-8 uppercase italic text-center">¿Cuánto tiempo te quitan las llamadas?</h3>
+                    <div className="space-y-10 w-full">
+                        <div>
+                            <div className="flex justify-between mb-4 font-bold text-sm uppercase tracking-widest text-slate-400">
+                                <span>Llamadas al día</span>
+                                <span className="text-cyan-400 text-xl">{calls}</span>
+                            </div>
+                            <input 
+                                type="range" 
+                                min="5" max="50" 
+                                value={calls} 
+                                onChange={(e) => setCalls(parseInt(e.target.value))}
+                            />
+                        </div>
+                        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="text-center md:text-left">
+                                <div className="text-5xl font-heavy text-white mb-2">{hoursPerMonth} HORAS</div>
+                                <div className="text-xs font-bold uppercase tracking-widest text-slate-500 italic">Libres para ti cada mes</div>
+                            </div>
+                            <div className="bg-white/5 px-6 py-4 rounded-2xl border border-white/5 text-sm text-slate-400 max-w-[200px] text-center italic">
+                                Imagina llegar a casa y no tener que responder mensajes de trabajo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const FAQItem = ({ q, a }) => {
+            const [open, setOpen] = useState(false);
+            return (
+                <div className="border-b border-white/5 py-6">
+                    <button 
+                        onClick={() => setOpen(!open)}
+                        className="w-full flex justify-between items-center text-left hover:text-cyan-400 transition-colors"
+                    >
+                        <span className="text-lg font-bold italic uppercase">{q}</span>
+                        <Icon name={open ? "minus" : "plus"} className="w-5 h-5" />
+                    </button>
+                    {open && (
+                        <p className="mt-4 text-slate-400 leading-relaxed text-sm animate-fadeIn">
+                            {a}
+                        </p>
+                    )}
+                </div>
+            );
+        };
+
         const App = () => {
             useEffect(() => {
                 const l = document.getElementById('loader');
@@ -154,90 +182,84 @@
                 <div className="min-h-screen w-full flex flex-col items-center selection:bg-cyan-500 selection:text-black">
                     <div className="fixed inset-0 bg-grid pointer-events-none"></div>
 
-                    {/* Nav Centrado */}
                     <nav className="fixed top-0 w-full z-50 px-6 py-4 flex justify-center items-center">
                         <div className="w-full max-w-7xl glass px-6 py-3 rounded-full flex justify-between items-center">
                             <div className="flex items-center gap-3">
-                                <div className="bg-cyan-500 text-black px-2 py-0.5 font-bold text-lg rounded">IL</div>
+                                <div className="bg-cyan-500 text-black px-2 py-0.5 font-bold text-lg rounded shadow-sm">IL</div>
                                 <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-400 hidden sm:inline">Impulso Local</span>
                             </div>
                             <div className="flex items-center gap-6">
-                                <div className="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                                    <a href="#como-ayudamos" className="hover:text-white transition-colors">Nuestro apoyo</a>
-                                    <a href="#historias" className="hover:text-white transition-colors">Éxitos</a>
-                                </div>
-                                <a href={WHATSAPP} target="_blank" className="bg-white text-black text-[10px] font-bold uppercase px-6 py-2.5 rounded-full hover:bg-cyan-500 transition-all shadow-lg active:scale-95">Reservar cita</a>
+                                <a href={WHATSAPP} target="_blank" className="bg-white text-black text-[10px] font-bold uppercase px-6 py-2.5 rounded-full hover:bg-cyan-500 transition-all shadow-lg active:scale-95">Me interesa</a>
                             </div>
                         </div>
                     </nav>
 
                     <main className="relative z-10 w-full flex flex-col items-center">
-                        {/* HERO SECTION - Centrado Absoluto */}
+                        {/* HERO: Enfocado en el alivio */}
                         <section className="min-h-screen w-full flex flex-col items-center justify-center px-6 text-center">
                             <div className="reveal w-full max-w-5xl flex flex-col items-center">
-                                <div className="inline-flex items-center gap-2 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-5 py-2 rounded-full font-bold uppercase tracking-widest text-[10px] mb-10">
-                                    <Icon name="store" className="w-3 h-3" /> Estamos a tu lado
+                                <div className="inline-flex items-center gap-2 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-5 py-2 rounded-full font-bold uppercase tracking-widest text-[10px] mb-10 shadow-sm">
+                                    <Icon name="sparkles" className="w-3 h-3" /> Tu negocio merece un respiro
                                 </div>
-                                <h1 className="font-heavy text-[11vw] md:text-[6.8rem] leading-[0.9] mb-12 uppercase">
-                                    DALE UN <span className="text-cyan-500 italic">RESPIRO</span> <br/> A TU NEGOCIO.
+                                <h1 className="font-heavy text-[11vw] md:text-[6.8rem] leading-[0.9] mb-12 uppercase tracking-tighter">
+                                    DEJA DE PERDER <br/> <span className="text-cyan-500 italic text-[10vw] md:text-[6rem]">CLIENTES Y VIDA.</span>
                                 </h1>
-                                <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 font-normal leading-relaxed mb-16">
-                                    Sabemos que tu comercio es tu vida. Te ayudamos a gestionar citas y clientes automáticamente para que tú solo tengas que preocuparte de dar el mejor servicio, <span className="text-white font-semibold italic">como siempre lo has hecho.</span>
+                                <p className="max-w-2xl mx-auto text-lg md:text-2xl text-slate-400 font-normal leading-relaxed mb-16 italic">
+                                    Tu Asistente Inteligente responde WhatsApps, reserva citas y soluciona dudas mientras tú estás con tus clientes o descansando. <br className="hidden md:block" /> <span className="text-white font-semibold">Como tener un empleado de confianza 24/7.</span>
                                 </p>
-                                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full max-w-2xl">
-                                    <a href={WHATSAPP} target="_blank" className="w-full sm:w-auto bg-cyan-500 text-black px-12 py-6 rounded-full font-bold text-xl uppercase hover:scale-105 transition-transform flex items-center gap-3 justify-center shadow-[0_15px_40px_rgba(6,182,212,0.4)]">
-                                        Reservar cita <Icon name="calendar" className="w-5 h-5" />
-                                    </a>
-                                    <div className="flex items-center gap-3 px-8 py-5 glass rounded-full justify-center">
-                                        <Icon name="heart" className="text-red-400 w-4 h-4" />
-                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300">Apoyo mutuo al barrio</span>
-                                    </div>
+                                <a href={WHATSAPP} target="_blank" className="bg-cyan-500 text-black px-12 py-7 rounded-full font-bold text-2xl uppercase hover:scale-105 transition-transform flex items-center gap-4 shadow-[0_15px_40px_rgba(6,182,212,0.4)] group">
+                                    Recuperar mi tiempo <Icon name="arrow-right" className="group-hover:translate-x-1 transition-transform" />
+                                </a>
+                            </div>
+                        </section>
+
+                        {/* BENEFICIOS DE LA IA: El Empleado Perfecto */}
+                        <section className="w-full py-40 px-6 flex justify-center bg-slate-900/10">
+                            <div className="max-w-6xl w-full">
+                                <div className="text-center mb-24">
+                                    <h2 className="text-3xl md:text-5xl font-heavy uppercase italic mb-6">¿Por qué un Asistente Inteligente?</h2>
+                                    <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-xs">Las ventajas del siglo XXI para el negocio de siempre</p>
+                                </div>
+                                <div className="grid md:grid-cols-4 gap-8">
+                                    {[
+                                        { t: "Nunca enferma", d: "Atiende a tus clientes los 365 días del año, incluso de madrugada.", i: "shield-check" },
+                                        { t: "Siempre amable", d: "Mantiene la sonrisa y la paciencia, respondiendo mil veces lo mismo.", i: "smile" },
+                                        { t: "Memoria infinita", d: "No olvida una cita, un nombre o una alergia de un cliente.", i: "brain" },
+                                        { t: "Cero costes extra", d: "Sin seguros sociales ni bajas. Un gasto fijo mínimo y predecible.", i: "trending-down" }
+                                    ].map((b, i) => (
+                                        <div key={i} className="p-8 glass rounded-[2rem] border border-white/5 flex flex-col items-center text-center">
+                                            <Icon name={b.i} className="text-cyan-500 w-10 h-10 mb-6" />
+                                            <h4 className="font-bold text-lg mb-3 uppercase italic">{b.t}</h4>
+                                            <p className="text-slate-400 text-sm">{b.d}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </section>
 
-                        {/* PROPÓSITO HUMANO */}
-                        <section className="w-full py-32 px-6 border-y border-white/5 bg-slate-900/10 flex justify-center">
-                            <div className="max-w-3xl w-full text-center">
-                                <h2 className="text-2xl md:text-4xl font-bold mb-10 italic text-slate-200">"No queremos que la tecnología sea un problema, sino tu mejor aliada."</h2>
-                                <p className="text-slate-400 text-lg leading-relaxed md:text-xl">
-                                    En <strong>Impulso Local</strong>, creemos que los autónomos merecen las mismas herramientas que los grandes, pero con un trato humano y honesto. Te acompañamos paso a paso, sin palabras raras.
-                                </p>
-                            </div>
-                        </section>
-
-                        {/* SOLUCIONES - Grid Centrado */}
-                        <section id="como-ayudamos" className="w-full py-40 px-6 flex justify-center">
+                        {/* CASOS DE USO REALES */}
+                        <section className="w-full py-40 px-6 flex justify-center">
                             <div className="max-w-7xl w-full">
-                                <div className="grid md:grid-cols-3 gap-16">
+                                <div className="text-center mb-24">
+                                    <h2 className="text-3xl md:text-5xl font-heavy uppercase italic mb-6">Todo lo que hace por ti</h2>
+                                    <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-xs">Olvídate de las tareas repetitivas</p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {[
-                                        {
-                                            t: "Tu Restaurante",
-                                            d: "Tus clientes reservan por WhatsApp en segundos. Tú recibes la confirmación sin soltar la bandeja. Así de fácil.",
-                                            i: "utensils",
-                                            b: "Sala organizada"
-                                        },
-                                        {
-                                            t: "Tu Peluquería",
-                                            d: "Agenda inteligente que trabaja por ti. Enviamos recordatorios automáticos para que nadie falte a su cita.",
-                                            i: "scissors",
-                                            b: "Cero ausencias"
-                                        },
-                                        {
-                                            t: "Tu Comercio",
-                                            d: "¿Tienes stock? ¿A qué hora abres? El asistente responde por ti 24/7 con amabilidad y rapidez.",
-                                            i: "shopping-cart",
-                                            b: "Clientes atendidos"
-                                        }
-                                    ].map((s, idx) => (
-                                        <div key={idx} className="flex flex-col items-center text-center reveal delay-1 group">
-                                            <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:border-cyan-500/50 transition-colors">
-                                                <Icon name={s.i} className="text-cyan-500 w-8 h-8" />
+                                        { t: "Reservas Directas", d: "Tus clientes eligen hora y día en WhatsApp y se anota solo en tu Google Calendar.", i: "calendar" },
+                                        { t: "Dudas de Horarios", d: "Responde al instante si abres un festivo o a qué hora cierras hoy.", i: "clock" },
+                                        { t: "Gestión de Precios", d: "Informa sobre tus tarifas o menús del día sin que tengas que buscar el PDF.", i: "tag" },
+                                        { t: "Recordatorios", d: "Envía un mensaje 2h antes de la cita para evitar que el cliente se olvide.", i: "bell" },
+                                        { t: "Reseñas en Google", d: "Pide educadamente una reseña positiva tras el servicio para subir tu ranking.", i: "star" },
+                                        { t: "Ubicación y Parking", d: "Envía el mapa y consejos para aparcar cerca de tu local automáticamente.", i: "map-pin" }
+                                    ].map((c, i) => (
+                                        <div key={i} className="flex gap-6 p-8 bg-slate-900/40 rounded-3xl border border-white/5 hover:border-cyan-500/30 transition-all group">
+                                            <div className="bg-cyan-500/10 p-4 rounded-2xl h-fit shrink-0 group-hover:bg-cyan-500 transition-colors">
+                                                <Icon name={c.i} className="text-cyan-400 w-6 h-6 group-hover:text-black transition-colors" />
                                             </div>
-                                            <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter italic">{s.t}</h3>
-                                            <p className="text-slate-400 mb-8 text-sm leading-relaxed max-w-xs">{s.d}</p>
-                                            <div className="mt-auto inline-flex items-center gap-2 text-[10px] font-black uppercase text-cyan-500 tracking-widest bg-cyan-500/5 px-4 py-1.5 rounded-full border border-cyan-500/20">
-                                                <Icon name="check" className="w-3 h-3" /> {s.b}
+                                            <div>
+                                                <h4 className="font-bold text-xl mb-2 italic uppercase">{c.t}</h4>
+                                                <p className="text-slate-400 text-sm leading-relaxed">{c.d}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -245,31 +267,24 @@
                             </div>
                         </section>
 
-                        {/* HISTORIAS REALES */}
+                        {/* CALCULADORA */}
+                        <section className="w-full py-32 px-6 flex justify-center bg-slate-900/10">
+                            <Calculator />
+                        </section>
+
+                        {/* TESTIMONIOS */}
                         <section id="historias" className="w-full py-40 px-6 glass rounded-t-[5rem] flex justify-center">
                             <div className="max-w-6xl w-full">
                                 <div className="text-center mb-28">
-                                    <h2 className="text-4xl md:text-6xl font-heavy mb-8 uppercase tracking-tight">VECINOS QUE YA <br/> <span className="text-cyan-500 italic">NOS HAN ELEGIDO.</span></h2>
-                                    <p className="text-slate-500 font-medium text-lg">Digitalización real para gente que no tiene tiempo que perder.</p>
+                                    <h2 className="text-4xl md:text-6xl font-heavy mb-8 uppercase tracking-tight">GENTE COMO TÚ QUE <br/> <span className="text-cyan-500 italic">YA DESCANSA.</span></h2>
+                                    <p className="text-slate-500 font-medium text-lg">Testimonios reales de dueños de negocios reales.</p>
                                 </div>
                                 
                                 <div className="grid md:grid-cols-3 gap-10">
                                     {[
-                                        {
-                                            n: "Ana",
-                                            b: "Estética Natura",
-                                            t: "Me daba miedo la tecnología, pero me lo pusieron tan fácil que ahora no sé cómo vivía sin ello. Mi agenda va sola."
-                                        },
-                                        {
-                                            n: "Carlos",
-                                            b: "Restaurante El Olivo",
-                                            t: "Por fin puedo estar en los fogones tranquilo. Las reservas entran solas y los clientes están encantados con la rapidez."
-                                        },
-                                        {
-                                            n: "Juan",
-                                            b: "Taller del Barrio",
-                                            t: "Ahora mis clientes saben cuándo recoger su coche sin tener que llamarme 5 veces. Ganamos tiempo todos."
-                                        }
+                                        { n: "Ana", b: "Estética Natura", t: "Lo que más me gusta es no tener que responder mensajes a las 11 de la noche. Mi IA lo hace por mí y yo descanso." },
+                                        { n: "Carlos", b: "Bar El Olivo", t: "Antes perdía 10 llamadas al mediodía por el jaleo. Ahora el asistente coge las reservas y yo sirvo cañas." },
+                                        { n: "Juan", b: "Mecánica Juan", t: "Daba mucha rabia dejar un coche a medias por el teléfono. Ahora solo miro la agenda al final del día." }
                                     ].map((test, i) => (
                                         <div key={i} className="bg-slate-900/60 p-12 rounded-[3rem] border border-white/5 flex flex-col items-center text-center reveal">
                                             <Icon name="quote" className="text-cyan-500/20 w-12 h-12 mb-8" />
@@ -287,58 +302,30 @@
                             </div>
                         </section>
 
-                        {/* COMPARATIVA CENTRADA */}
-                        <section className="w-full py-48 px-6 flex justify-center">
-                            <div className="max-w-5xl w-full glass rounded-[4rem] overflow-hidden shadow-2xl border border-white/5">
-                                <div className="grid md:grid-cols-2">
-                                    <div className="p-16 bg-slate-900/80 flex flex-col items-center border-b md:border-b-0 md:border-r border-white/5">
-                                        <h4 className="font-bold text-lg uppercase mb-10 text-slate-500 flex items-center gap-3">
-                                            <Icon name="frown" className="w-5 h-5" /> Situación actual
-                                        </h4>
-                                        <ul className="space-y-8 w-full max-w-xs">
-                                            {["Llamadas que cortan tu ritmo", "Citas que se olvidan", "Responder mil veces lo mismo", "Clientes que se cansan"].map((item, i) => (
-                                                <li key={i} className="flex items-center gap-4 text-slate-400 text-base">
-                                                    <Icon name="x" className="text-slate-700 w-5 h-5 shrink-0" /> {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div className="p-16 bg-cyan-500/5 flex flex-col items-center">
-                                        <h4 className="font-bold text-lg uppercase mb-10 text-cyan-400 flex items-center gap-3">
-                                            <Icon name="smile" className="w-5 h-5" /> Con nuestro apoyo
-                                        </h4>
-                                        <ul className="space-y-8 w-full max-w-xs">
-                                            {["Trabajo sin interrupciones", "Avisos de cita al cliente", "Respuestas inmediatas 24/7", "Más tiempo para tu descanso"].map((item, i) => (
-                                                <li key={i} className="flex items-center gap-4 text-white text-base font-medium">
-                                                    <Icon name="check" className="text-cyan-400 w-5 h-5 shrink-0" /> {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                        {/* FAQ */}
+                        <section className="w-full py-40 px-6 flex justify-center glass">
+                            <div className="max-w-4xl w-full">
+                                <div className="text-center mb-24">
+                                    <h2 className="text-4xl md:text-6xl font-heavy mb-8 uppercase tracking-tight">DESPEJA TUS <br/> <span className="text-cyan-500 italic">DUDAS.</span></h2>
+                                </div>
+                                <div className="space-y-4">
+                                    <FAQItem q="¿Es una máquina fría la que responde?" a="Para nada. Entrenamos a tu asistente con tu forma de hablar y tu amabilidad. Tus clientes sentirán que les atiende una persona experta." />
+                                    <FAQItem q="¿Y si tengo una reserva especial?" a="El sistema está diseñado para gestionar el 90% del día a día. Si ocurre algo muy específico que la IA no sabe resolver, te avisará al instante para que entres tú." />
+                                    <FAQItem q="¿Perderé el control de mi agenda?" a="Al revés. Tendrás más control que nunca. Podrás ver en tiempo real cómo se llena tu día sin mover un dedo, y modificar lo que quieras cuando quieras." />
+                                    <FAQItem q="¿Cuánto tiempo tardáis?" a="Depende de lo complejo que sea tu negocio. Las soluciones estándar están en una semana, pero si necesitas integraciones a medida, nos aseguramos de que todo sea perfecto antes de lanzarlo." />
                                 </div>
                             </div>
                         </section>
 
-                        {/* CTA FINAL CENTRADO */}
+                        {/* CTA FINAL */}
                         <section className="w-full py-60 px-6 text-center flex flex-col items-center bg-gradient-to-b from-transparent to-cyan-500/10">
-                            <div className="reveal flex flex-col items-center w-full max-w-4xl">
-                                <h2 className="font-heavy text-6xl md:text-8xl leading-none mb-14 uppercase tracking-tighter">
-                                    ¿DAMOS EL PASO <br/> <span className="text-cyan-500">JUNTOS?</span>
-                                </h2>
-                                <p className="text-slate-400 text-xl md:text-2xl mb-16 leading-relaxed">
-                                    No te preocupes por el "cómo", de eso nos encargamos nosotros. Charlamos 15 minutos y vemos cómo aliviar tu carga de trabajo.
-                                </p>
-                                <div className="reveal delay-2 w-full flex flex-col items-center">
-                                    <a href={WHATSAPP} target="_blank" className="w-full max-w-md bg-white text-black px-12 py-8 rounded-full font-bold text-2xl uppercase hover:bg-cyan-500 transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-center gap-4 group active:scale-90">
-                                        Reservar cita <Icon name="arrow-right" className="group-hover:translate-x-1 transition-transform w-7 h-7" />
-                                    </a>
-                                    <div className="mt-12 flex items-center gap-4 text-slate-500 text-[11px] font-bold uppercase tracking-[0.4em]">
-                                        <div className="w-8 h-px bg-slate-800"></div>
-                                        SIN COMPROMISO NI PERDIDA DE TIEMPO
-                                        <div className="w-8 h-px bg-slate-800"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h2 className="font-heavy text-6xl md:text-8xl leading-none mb-14 uppercase tracking-tighter reveal">
+                                RECUERDA POR QUÉ <br/> <span className="text-cyan-500 italic uppercase">EMPEZASTE.</span>
+                            </h2>
+                            <p className="text-slate-400 text-xl mb-16 max-w-2xl leading-relaxed italic">No montaste tu negocio para estar pegado a un móvil. Montaste tu negocio para ser libre y dar un gran servicio. Recuperémoslo.</p>
+                            <a href={WHATSAPP} target="_blank" className="bg-white text-black px-12 py-9 rounded-full font-bold text-2xl uppercase hover:bg-cyan-500 transition-all shadow-2xl flex items-center justify-center gap-5 group active:scale-90">
+                                Quiero mi Asistente IA <Icon name="rocket" className="group-hover:-translate-y-1 transition-transform" />
+                            </a>
                         </section>
                     </main>
 
@@ -346,17 +333,15 @@
                         <div className="max-w-7xl w-full flex flex-col md:flex-row justify-between items-center gap-16">
                             <div className="flex flex-col items-center md:items-start text-center md:text-left">
                                 <div className="bg-cyan-500/10 text-cyan-400 px-5 py-2 font-bold text-sm rounded-xl mb-6 inline-block border border-cyan-500/20">Impulso Local</div>
-                                <p className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Tu departamento tecnológico externo</p>
-                                <p className="text-slate-600 text-[11px] max-w-xs italic">Hecho por y para el comercio de barrio con honestidad.</p>
+                                <p className="text-slate-600 text-[11px] max-w-xs italic leading-relaxed">Honestidad y tecnología para el comercio que levanta el país cada mañana.</p>
                             </div>
                             <div className="text-slate-700 text-[10px] font-bold uppercase tracking-[0.3em] text-center md:text-right leading-loose">
-                                © 2025 • IMPULSO LOCAL <br/> 
-                                <span className="opacity-50">HECHO CON CORAZÓN EN ESPAÑA</span>
+                                © 2025 • IMPULSO LOCAL <br/>
+                                <span className="opacity-50 italic">Tu tiempo es tu mayor tesoro.</span>
                             </div>
                         </div>
                     </footer>
 
-                    {/* Botón flotante WhatsApp - No interfiere con scroll */}
                     <a href={WHATSAPP} target="_blank" className="fixed bottom-10 right-10 w-20 h-20 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(37,211,102,0.5)] z-[200] hover:scale-110 active:scale-90 transition-all group overflow-hidden">
                         <Icon name="message-circle" className="text-white w-10 h-10 group-hover:rotate-12 transition-transform fill-white" />
                         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
